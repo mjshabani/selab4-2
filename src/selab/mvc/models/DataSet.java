@@ -14,6 +14,15 @@ public class DataSet<T extends Model> {
 
         set.put(key, entity);
     }
+    
+    public boolean remove(T entity) {
+        String key = entity.getPrimaryKey();
+        if (!set.containsKey(key))
+            return false;
+
+        set.remove(entity);
+        return true;
+    }
 
     public T get(String key) {
         return set.get(key);
