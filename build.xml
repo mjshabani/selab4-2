@@ -1,0 +1,40 @@
+<project name="MVC project" default="compile">
+
+    <target name="compile">
+        <mkdir dir="build/classes"/>
+        <javac srcdir="src" destdir="build/classes" classpathref="libs">
+        </javac>
+
+    </target>
+
+    <target name="make">
+
+        <jar destfile="build/checksites.jar">
+            <fileset dir="build/classes"/>
+            <zipgroupfileset dir="lib" includes="json-20180813.jar" />
+            <manifest>
+                <attribute name="Main-Class"
+                    value="Main"/>
+            </manifest>
+        </jar>
+
+    </target>
+
+    <taskdef resource="com/puppycrawl/tools/checkstyle/ant/checkstyle-ant-task.properties"
+         classpath="lib/checkstyle-8.19-all.jar"/>
+
+    <target name="lint">
+        <checkstyle config="lib/checkstyle_checks.xml">
+            <fileset dir="src" includes="**/*.java"/>
+            <formatter type="plain"/>
+        </checkstyle>
+    </target>
+
+	<path id="libs">
+        <fileset dir="lib">
+            <include name="*.jar"/>
+        </fileset>
+        <pathelement path= "build/lib"/>
+    </path>
+
+</project>
